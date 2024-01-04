@@ -1,36 +1,16 @@
 class Solution {
 public:
     int minOperations(vector<int>& nums) {
-        map<int, int> m;
+        unordered_map<int, int> m;
 
         for (int i = 0; i < nums.size(); i++) {
-            if (m.find(nums[i]) != m.end()) {
-                m[nums[i]]++;
-            } else {
-                m[nums[i]] = 1;
-            }
+            m[nums[i]]++;
         }
 
         int ans = 0;
-        for (auto i : m) {
-            int count = i.second;
-
-            if (count % 3 == 0) {
-                ans += count / 3;
-                continue;
-            }
-
-            while (count > 4) {
-                count -= 3;
-                ans++;
-            }
-
-            if (count % 2 == 0) {
-                ans += count / 2;
-                continue;
-            }
-
-            return -1;
+        for (auto [_, c] : m) {
+            if (c == 1) return -1;
+            ans += ceil((double)(c) / 3);
         }
 
         return ans;
